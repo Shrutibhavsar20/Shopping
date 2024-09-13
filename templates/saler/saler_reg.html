@@ -1,0 +1,183 @@
+{% extends 'customer/layout.html' %}
+{% block content %}
+
+{% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+ <!-- ================ start banner area ================= -->	
+	<section class="blog-banner-area" id="category">
+		<div class="container h-100">
+			<div class="blog-banner">
+				<div class="text-center">
+					<h1>Register</h1>
+					<nav aria-label="breadcrumb" class="banner-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Register</li>
+            </ol>
+          </nav>
+				</div>
+			</div>
+    </div>
+	</section>
+	<!-- ================ end banner area ================= -->
+  
+  <!--================Login Box Area =================-->
+<div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    
+                    <h1 class="mb-5">Registration</h1>
+                </div>
+                <div class="row g-4 justify-content-center">
+            
+                 
+                    <div class="col-md-10">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <form method="post" action="/saler/store_reg" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-md-6 py-1">
+                                            <label for="name">First name</label>
+
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="firstName">
+                                        </div>
+                                    </div>
+                                     <div class="col-md-6 py-1">
+                                            <label for="name">Last name</label>
+
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-6 py-1">
+                                            <label for="name">Username</label>
+
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="username" name="username" placeholder="username">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 py-1">
+                                            <label for="email">Email</label>
+
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email">
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-12 py-1">
+                                            <label for="name">Shop name</label>
+
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="shop_name" name="shop_name" placeholder="ShopName">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 py-1">
+                                            <label for="message"> Shop Address</label>
+
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Address" id="shop_address" name="shop_address" style="height: 90px"></textarea>
+                                        </div>
+                                    </div>
+
+                                   <div class="col-12 py-1">
+                                            <label for="subject">Shop Contact</label>
+
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="shop_contact" name="shop_contact" placeholder="contact">
+                                        </div>
+                                    </div>
+
+                                     <div class="control-group col-sm-12 pb-3">
+                                <label>Shop image :</label>
+                                <input type="file" class="form-control p-4" id="shop_image" name="shop_image" placeholder="Confirm Password"
+                                    required="required" data-validation-required-message="Please enter your Confirm Password" />
+                                <p class="help-block text-danger"></p>
+                            		</div>
+                                      
+                                      <div class="col-md-4 py-1">
+                                        <label for="select1">State</label>
+                                        <hr>
+
+                                    <div class="form-floating">
+                                        <select class="form-select" id="state" name="state">
+                                          <option value="">Select State</option>
+                                                {% for row in state %}
+                                                <option value="{{row.id}}">{{row.state_name}}</option>
+                                               
+                                                {% endfor %}
+                                        </select>
+                                      </div>
+                                </div>
+                                  <div class="col-md-4 py-1">
+                                        <label for="select1">City</label>
+                                        <hr>
+
+                                    <div class="form-floating">
+                                        <select class="form-select" id="city" name="city">
+                                          <option value="">Select City</option>
+                                                {% for row in city %}
+                                                <option value="{{row.id}}">{{row.city_name}}</option>
+                                               
+                                                {% endfor %}
+                                        </select>
+                                      </div>
+                                </div>
+                                <div class="col-md-4 py-1">
+                                        <label for="select1">Area</label>
+                                        <hr>
+
+                                    <div class="form-floating">
+                                        <select class="form-select" id="area" name="area">
+                                           <option value="">Select area</option>
+                                                {% for row in area %}
+                                                <option value="{{row.id}}">{{row.area_name}}</option>
+                                               
+                                                {% endfor %}
+                                        </select>
+                                      </div>
+                                </div>
+
+                               
+                            
+
+                                
+                                   
+                           <div class="col-md-12 py-1">
+                                            <label for="name">Password</label>
+
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                        </div>
+                                    </div>
+                            <div class="col-md-12 py-3">
+                                <label for="name">Confirm Password</label>
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Conform Password">
+                                            
+                                        </div>
+                                    </div>
+
+
+
+
+                                      
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Register</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	<!--================End Login Box Area =================-->
+{% endblock %}

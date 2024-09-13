@@ -1,0 +1,101 @@
+{% load static %}
+<header class="header_area">
+    <!-- Include jQuery and jQuery UI -->
+
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand logo_h" href="{% url 'index' %}"><img src="{% static 'customer/img/logo.png' %}" alt="Logo"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="/customer/index">Home</a></li>
+                        <li class="nav-item submenu dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category</a>
+                            <ul class="dropdown-menu">
+                                {% for c in category %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'product_list' c.id %}">{{ c.cat_name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/customer/contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/customer/register">Register</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="/customer/logout">Logout</a></li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="/customer/login">Login</a></li>
+                        {% endif %}
+                    </ul>
+                    <ul class="nav-shop">
+                        <li class="nav-item"><button><i class="ti-search"></i></button></li>
+                        <li class="nav-item">
+                            <a href="{% url 'cart' %}">
+                                <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle"></span></button>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item"><a class="button button-header" href="{% url 'myorders' %}">My Orders</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+
+</header>
+
+<div class="search-bar">
+    <div class="container">
+        <form id="search-form" method="post" class="d-flex justify-content-center">
+            {% csrf_token %}
+            <input type="text" name="search" id="search" class="form-control search-input" placeholder="Search for products...">
+            <button type="button" class="btn btn-primary search-button">Search</button>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'customer/vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function() {
+        var selectedUrl = '';
+
+        $("#search").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{% url 'autocomplete' %}",
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response($.map(data, function(item) {
+                            return {
+                                label: item.name,
+                                value: item.name,
+                                url: item.url
+                            };
+                        }));
+                    }
+                });
+            },
+            select: function(event, ui) {
+                selectedUrl = ui.item.url;
+            }
+        });
+
+        $(".search-button").click(function(event) {
+            event.preventDefault();
+            if (selectedUrl) {
+                window.location.href = selectedUrl;
+            }
+        });
+    });
+</script>

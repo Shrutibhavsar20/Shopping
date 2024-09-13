@@ -1,0 +1,67 @@
+{% extends 'customer/layout.html' %}
+{% block content %}
+{% load static %}
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                {% if all_order_details %}
+                    {% for order_data in all_order_details %}
+                        <h3>Order ID: {{ order_data.order.id }}</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in order_data.order_details %}
+                                    <tr>
+                                        <td>
+                                            <div class="media">
+                                                <div class="d-flex">
+                                                    <img src="/images/upload/{{ row.product.image }}" height="260" width="260" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <a href="/customer/product_detail/{{ row.product.id }}"><p>{{ row.product.product_name }}</p></a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h5>₹{{ row.product.price }}</h5>
+                                        </td>
+                                        <td class="qua-col first-row">
+                                            <h5>{{ row.quantity }}</h5>
+                                        </td>
+                                        <td>
+                                            <h5 id="total-price{{ row.id }}">₹{{ row.total_price }}</h5>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr class="bottom_button">
+                                    <td>
+                                        <a class="button" href="{% url 'generate_invoice' order_data.order.id %}">Download Invoice</a>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <h5>Subtotal</h5>
+                                    </td>
+                                    <td>
+                                        <h5>₹{{ order_data.subtotal }}</h5>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                {% else %}
+                    <p>No orders found for this user.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

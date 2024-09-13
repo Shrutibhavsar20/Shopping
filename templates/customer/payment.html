@@ -1,0 +1,56 @@
+{% extends 'customer/layout.html' %}
+{% block content %}
+{% load static %}
+<section class="blog-banner-area" id="blog">
+    <div class="container h-100">
+        <div class="blog-banner ">
+            <div class="text-center">
+                <h1>Payment</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Razorpay</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout_area section-margin--small">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="order_box">
+                    <h2>Your Order</h2>
+                    <ul class="list">
+                        <li><a href="#"><h4>Product <span>Total</span></h4></a></li>
+                        {% for row in cart %}
+                        <li><a href="#">{{ row.product.product_name }} x {{ row.quantity }} <span class="middle"></span> <span class="last">{{ row.total_price }}</span></a></li>
+                        {% endfor %}
+                    </ul>
+                    <ul class="list list_2">
+                        <li><a href="#">Subtotal <span>₹{{ subtotal }}</span></a></li>
+                        <li><a href="#">Total <span>₹{{ subtotal }}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <form class="text-center border border-light p-5" action="/customer/success" method="POST">
+            {% csrf_token %}
+            <!-- RAZORPAY INTEGRATION HERE -->
+            <script src="https://checkout.razorpay.com/v1/checkout.js"
+                    data-key="rzp_test_PvM4GxK9MYlCUc"
+                    data-amount="{{ payment.amount }}"
+                    data-currency="INR"
+                    data-order_id="{{ payment.id }}"
+                    data-buttontext="Pay with Razorpay"
+                    data-name="Advertisement Relese"
+                    data-description="Complete Ad Solution"
+                    data-image="https://oibp1.000webhostapp.com/logo.PNG"
+                    data-prefill.name="{{ request.user.first_name }}"
+                    data-prefill.email="{{ request.user.email }}"
+                    data-theme.color="#F37254"></script>
+        </form>
+    </div>
+</section>
+{% endblock %}  

@@ -1,0 +1,47 @@
+{% extends 'myadmin/common/layout.html' %}
+{% block content %}
+{% load static %}
+<div class="container-fluid">
+
+    <div class="row mt-3">
+      <div class="col-lg-12">
+         <div class="card">
+           <div class="card-body">
+           <div class="card-title"> All state</div>
+           <hr>
+					<div class="table-responsive">
+                      <table class="table table-striped">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>Area ID</th>
+                        <th>Area name</th>
+                        <th>City name</th>
+                        <th>State name</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in result %}
+              <tr class="active">
+                <td>{{row.id}}</td>
+                <td>{{row.area_name}}</td>
+                <td>{{row.city}}</td>
+                <td>{{row.state}}</td>
+                <td>
+                  <a href="/myadmin/edit_area/{{row.id}}"><button class="btn btn-success">Edit</button></a>
+                </td>
+                <td>
+                  <a href="/myadmin/delete_area/{{row.id}}"><button class="btn btn-danger">Delete</button></a>
+                </td>
+
+                
+              </tr>
+              {% endfor %}
+                    </tbody>
+                      </table>
+                    </div>
+         </div>
+         </div>
+      </div>
+{% endblock %}

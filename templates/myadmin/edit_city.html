@@ -1,0 +1,35 @@
+{% extends 'myadmin/common/layout.html' %}
+{% block content %}
+    <div class="container-fluid">
+
+    <div class="row mt-3">
+      <div class="col-lg-12">
+         <div class="card">
+           <div class="card-body">
+           <div class="card-title"> Add state</div>
+           <hr>
+            <form class="forms-sample" method="post" action="/myadmin/update_city/{{result.id}}">
+            	{% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputName1">City name</label>
+              <input type="text" class="form-control" id="city_name" name="city_name" placeholder="City name" value="{{result.city_name}}">
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputName1">Select state</label>
+                <select class="form-control" id="sid" name="sid">
+                    <option value="" selected>Select state </option>
+                    {% for row in cities %}
+                  <option value="{{row.id}}"
+                  {% if result.state_id == row.id %}selected{% endif %}>{{row.state_name}}</option>
+                   {% endfor %}
+                </select>
+              </div>
+
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button class="btn btn-dark">Cancel</button>
+            </form>
+         </div>
+         </div>
+      </div>
+{% endblock %}
